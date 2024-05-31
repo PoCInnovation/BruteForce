@@ -1,8 +1,8 @@
 > If you see this section, you've just created a repository using [PoC Innovation's Open-Source project template](https://github.com/PoCInnovation/open-source-project-template). Check the [getting started guide](./.github/getting-started.md).
 
-# [PROJECT'S NAME]
+# Brut Forcer Next-Gen
 
-[Project's description]
+Brut Forcer next generation written in go
 
 ## How does it work?
 
@@ -16,7 +16,7 @@
 
 ### Quickstart
 
-[Explain how to run this project]
+Like every programme in Go : ```go run```
 
 ### Usage
 
@@ -31,11 +31,11 @@ If you're interested in how the project is organized at a higher level, please c
 ## Our PoC team ❤️
 
 Developers
-| [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy)
+| [<img src="https://github.com/louonezime.png?size=85" width=85><br><sub>Lou Onezime</sub>](https://github.com/louonezime) | [<img src="https://github.com/57ave.png?size=85" width=85><br><sub>Gustave Delecroix</sub>](https://github.com/57ave) | [<img src="https://github.com/SIMLUKE.png?size=85" width=85><br><sub>Luc Simon</sub>](https://github.com/SIMLUKE)
 | :---: | :---: | :---: |
 
 Manager
-| [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>[Manager's name]</sub>](https://github.com/adrienfort)
+| [<img src="https://github.com/adamdeziri.png?size=85" width=85><br><sub>Adam Deziri</sub>](https://github.com/adamdeziri)
 | :---: |
 
 <h2 align=center>
