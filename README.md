@@ -4,21 +4,25 @@ Brut Forcer next generation written in go
 
 ## How does it work?
 
-[Explain how this project is working]
+Using advanced wordlists to get information on web server
 
 ## Getting Started
 
 ### Installation
 
-[Explain how to install all of the project's dependencies]
+You only need the Go CLI install on your computer.
+
+[Golang install guide](https://go.dev/doc/install)
 
 ### Quickstart
 
-Like every programme in Go : ```go run```
+Build it first : ```go build```
+
+Launch the binary : ```./binary```
 
 ### Usage
 
-[Explain how to use this project]
+No usage so far
 
 ## Get involved
 
