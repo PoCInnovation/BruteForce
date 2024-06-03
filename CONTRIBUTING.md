@@ -1,4 +1,4 @@
-# Contributing to [PROJECT'S NAME]
+# Contributing to BruteForce Next-Gen
 
 ## Create an issue
 
@@ -11,7 +11,7 @@ Select an [issue](https://github.com/PoCInnovation/$REPOSITORY/issues) that you 
 
 The recommended workflow is to fork this repository and open pull requests from your fork.
 
-### 1. Fork, clone & configure [PROJECT'S NAME] upstream
+### 1. Fork, clone & configure `BruteForce` upstream
 
 - Click on the _Fork_ button on GitHub
 - Clone the original repository
