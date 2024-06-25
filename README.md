@@ -36,7 +36,17 @@ go run src/main.go
 
 ### Usage
 
-No usage so far
+```bash
+./bruteforce [OPTIONS]
+```
+
+### Matching
+
+For matching usage, the following flags are available:
+
+`-status-codes` : match based on a list of status codes.
+
+For example, `bruteforce -status-codes="200,201,202,401,404". By default : 200, 401, 403, 404, 429, 500
 
 ## Get involved
 
