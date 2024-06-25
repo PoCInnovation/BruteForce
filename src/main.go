@@ -4,13 +4,7 @@ import (
 	"flag"
 	"log"
 	"fmt"
-	// "BruteForce/src/matcher"
-)
-
-var (
-    WarningLogger *log.Logger
-    InfoLogger    *log.Logger
-    ErrorLogger   *log.Logger
+	"bruteforce/src/matching"
 )
 
 func main() {
@@ -20,11 +14,12 @@ func main() {
 	flag.Parse()
 	if *usagePtr {
 		fmt.Println("Usage: use flag match=<option>")
+		fmt.Println("	option	status[100-599|all]")
 		return;
 	}
 	if *matchPtr != "" {
-		log.Println("match:", *matchPtr)
-		return;
+		matcher.MatchParser(*matchPtr)
+	} else {
+		log.Fatal("No match indicated.")
 	}
-	log.Println("No match indicated.")
 }
