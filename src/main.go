@@ -2,24 +2,21 @@ package main
 
 import (
 	"flag"
-	"log"
 	"fmt"
 	"bruteforce/src/matching"
 )
 
 func main() {
-	matchPtr := flag.String("match", "", "a string")
 	usagePtr := flag.Bool("help", false, "a bool")
+	statusPtr := flag.String("status-codes", "200,401,403,404,429,500", "Comma-separated list of status codes to match")
 
 	flag.Parse()
 	if *usagePtr {
-		fmt.Println("Usage: use flag match=<option>")
-		fmt.Println("	option	status[100-599|all]")
+		fmt.Println("Usage for matching options:\n\nuse flag -status-codes=\"<status-options>\"")
+		fmt.Println("\tstatus-options\t200,202,400,404 (Comma-separated list)")
+		fmt.Println("\t\t\tall")
+		fmt.Println("\t\t\t[By default: 200,401,403,404,429,500]")
 		return;
 	}
-	if *matchPtr != "" {
-		matcher.MatchParser(*matchPtr)
-	} else {
-		log.Fatal("No match indicated.")
-	}
+	matcher.MatchParser(*statusPtr)
 }
