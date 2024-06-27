@@ -10,7 +10,7 @@ import (
 func matchStatusCode(url string, matchCodes []int) (bool, string) {
     resp, err := http.Get(url)
     if err != nil {
-        return false, ""
+        return false, err.Error()
     }
     defer resp.Body.Close()
 

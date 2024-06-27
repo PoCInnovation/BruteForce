@@ -18,5 +18,5 @@ func main() {
 		fmt.Println("\t\t\t[By default: 200,401,403,404,429,500]")
 		return;
 	}
-	matcher.MatchParser("http://example.com", *statusPtr)
+	matcher.MatchParser("http://r.com", *statusPtr)
 }
