@@ -1,8 +1,8 @@
+package main
 
 import (
   "fmt"
   "time"
-  "strings"
 )
 
 type forceData struct {
@@ -11,25 +11,26 @@ type forceData struct {
 	url string
 }
 
-func executeQueryFromFile(filePathQuery []string, filePathRoot chan string, worker int) {
-  for eachtask := range filePathRoot {
-    for i := 0 ; i < worker ; i++ {
-      fmt.Println(splitData)
-    }
+func executeQueryFromFile(currentPath chan string) {
+  for eachtask := range currentPath{
+      fmt.Printf("eachtask %s \n", eachtask)
   }
 }
 
 func mainRequest(worker int) {
   channel := make(chan string)
-  wordArray := GetFileContent("./wordList/rootList")
+  wordArray := GetFileContent("../wordList/rootList")
 
-  for i := 0 ;i < len(data_tab); i++ {
-		go executeQueryFromFile(wordArray, channel)
+  for i := 0 ;i < worker; i++ {
+		go executeQueryFromFile(channel)
 	}
-
-  for i := 0; i < len(data_tab); i++ {
-    channel <- data_tab[i]
+  for i := 0; i < len(wordArray); i++ {
+    channel <- wordArray[i]
   }
   time.Sleep(1 * time.Second)
   close(channel)
+}
+
+func main () {
+  mainRequest(3);
 }
