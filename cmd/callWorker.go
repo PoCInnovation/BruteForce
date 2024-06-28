@@ -10,18 +10,18 @@ type forceData struct {
 	url string
 }
 
-func executeQueryFromFile(currentPath chan string) {
+func executeQueryFromFile(data forceData, currentPath chan string) {
   for taskData := range currentPath{
-    queryExecute(taskData, "POST")
+    queryExecute(data, taskData, "POST")
     }
 }
 
-func mainRequest(worker int) {
+func mainRequest(data forceData) {
   channel := make(chan string)
   wordArray := GetFileContent("../wordList/rootList")
 
-  for i := 0 ;i < worker; i++ {
-		go executeQueryFromFile(channel)
+  for i := 0 ;i < data.worker; i++ {
+		go executeQueryFromFile(data, channel)
 	}
   for i := 0; i < len(wordArray); i++ {
     channel <- wordArray[i]
@@ -31,5 +31,10 @@ func mainRequest(worker int) {
 }
 
 func main () {
-  mainRequest(3);
+  data := forceData {
+    worker: 3,
+    wordList: "../wordList/rootList",
+    url: "http://localhost:3333",
+  }
+  mainRequest(data);
 }

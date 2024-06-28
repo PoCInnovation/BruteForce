@@ -7,10 +7,10 @@ import (
 	"net/http"
 )
 
-func queryExecute(path string, method string) {
+func queryExecute(data forceData, path string, method string) {
 
 	client := &http.Client{}
-	req, err := http.NewRequest(method, "http://localhost:3333" + path, nil)
+	req, err := http.NewRequest(method, data.url + path, nil)
 	if err != nil {
 	  log.Fatal(err)
 	}
