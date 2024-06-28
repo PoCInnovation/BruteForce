@@ -1,7 +1,6 @@
 package main
 
 import (
-  "fmt"
   "time"
 )
 
@@ -12,9 +11,9 @@ type forceData struct {
 }
 
 func executeQueryFromFile(currentPath chan string) {
-  for eachtask := range currentPath{
-      fmt.Printf("eachtask %s \n", eachtask)
-  }
+  for taskData := range currentPath{
+    queryExecute(taskData, "POST")
+    }
 }
 
 func mainRequest(worker int) {
