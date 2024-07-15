@@ -4,19 +4,26 @@ import (
 	"fmt"
 	"strings"
 	"net/http"
+    "log"
 )
 
 
 func matchStatusCode(url string, matchCodes []int) (bool, string) {
+    isAll := false
     resp, err := http.Get(url)
     if err != nil {
         return false, err.Error()
     }
     defer resp.Body.Close()
 
+    if matchCodes[0] == 0 {
+        isAll = !isAll;
+    } else {
+        log.Printf("Matching status codes %d...", matchCodes)
+    }
     for _, code := range matchCodes {
-        if resp.StatusCode == code {
-            return true, fmt.Sprintf("status code is %d", code)
+        if resp.StatusCode == code  || isAll {
+            return true, fmt.Sprintf("status code is %d", resp.StatusCode)
         }
     }
     return false, fmt.Sprintf("status code is %d", resp.StatusCode)
@@ -24,6 +31,12 @@ func matchStatusCode(url string, matchCodes []int) (bool, string) {
 
 func parseStatusCodes(statusCodeList string) ([]int, error) {
     codeStrs := strings.Split(statusCodeList, ",")
+
+    if statusCodeList == "all" {
+        log.Println("Matching all status codes")
+        return []int{0}, nil
+    }
+
     var codes []int
     for _, codeStr := range codeStrs {
         var code int
@@ -36,6 +49,7 @@ func parseStatusCodes(statusCodeList string) ([]int, error) {
 			fmt.Printf("[WARN] `%d` not considered, invalid status code.", code)
 		}
     }
+
 	if len(codes) == 1 && codes[0] == 0 {
 		return nil, fmt.Errorf("no valid status code given")
 	}
