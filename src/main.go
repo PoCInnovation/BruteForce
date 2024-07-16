@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bruteforce/src/matching"
 	"flag"
 	"fmt"
-	"bruteforce/src/matching"
 )
 
 func main() {
@@ -18,7 +18,9 @@ func main() {
 		fmt.Println("\tstatus-options\t200,202,400,404 (Comma-separated list)")
 		fmt.Println("\t\t\tall")
 		fmt.Println("\t\t\t[By default: 200,401,403,404,429,500]")
-		return;
+		fmt.Println("\nuse flag -header=\"<key:value>\"")
+		fmt.Println("use flag -body=\"<string-in-body>\"")
+		return
 	}
 	matcher.MatchParser("http://example.com", *statusPtr, *headerPtr, *bodyPtr)
 }

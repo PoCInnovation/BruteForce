@@ -1,10 +1,9 @@
 package matcher
 
 import (
+	"io/ioutil"
 	"log"
-    "io/ioutil"
-    "fmt"
-    "net/http"
+	"net/http"
 )
 
 type MatchCriteria struct {
@@ -14,6 +13,9 @@ type MatchCriteria struct {
 }
 
 func matchResponse(url string, criteria MatchCriteria) (bool, string) {
+	status := true
+	matchError := ""
+
 	resp, err := http.Get(url)
 	if err != nil {
 		return false, err.Error()
@@ -25,18 +27,27 @@ func matchResponse(url string, criteria MatchCriteria) (bool, string) {
 		return false, err.Error()
 	}
 
-	matchStatusCode(resp, criteria.StatusCodes)
-	matchHeaders(resp, criteria)
-	matchContents(body, criteria)
+	status, matchError = matchStatusCode(resp, criteria.StatusCodes)
+	if !status {
+		return false, matchError
+	}
+	status, matchError = matchHeaders(resp, criteria)
+	if !status {
+		return false, matchError
+	}
+	status, matchError = matchContents(body, criteria)
+	if !status {
+		return false, matchError
+	}
 
-	return false, fmt.Sprintf("status code is %d", resp.StatusCode)
+	return true, "Matched successfully for " + url
 }
 
 func MatchParser(url string, statuses string, headers string, bodyContains string) {
 	matchCodes, err := parseStatusCodes(statuses)
 	if err != nil {
-        log.Fatal("Error parsing status codes:", err)
-    }
+		log.Fatal("Error parsing status codes:", err)
+	}
 
 	matchHeaders := parseHeaders(headers)
 	criteria := MatchCriteria{
@@ -46,9 +57,9 @@ func MatchParser(url string, statuses string, headers string, bodyContains strin
 	}
 
 	matched, msg := matchResponse(url, criteria)
-    if matched {
-        log.Println("Matched:", msg)
-    } else {
-        log.Println("Not matched:", msg)
-    }
+	if matched {
+		log.Println("Matched:", msg)
+	} else {
+		log.Println("Not matched:", msg)
+	}
 }

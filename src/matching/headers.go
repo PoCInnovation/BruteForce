@@ -2,15 +2,15 @@ package matcher
 
 import (
 	"fmt"
-	"strings"
-	"net/http"
 	"log"
+	"net/http"
+	"strings"
 )
 
 func matchHeaders(resp *http.Response, criteria MatchCriteria) (bool, string) {
 	for key, value := range criteria.Headers {
 		if resp.Header.Get(key) != value {
-			return false, fmt.Sprintf("header mismatch: %s=%s", key, value)
+			return false, fmt.Sprintf("header mismatch: %s=%s\nheaders: %s", key, value, resp.Header)
 		}
 	}
 	return true, "headers match"
