@@ -1,10 +1,13 @@
 package matcher
 
-import "strings"
+import (
+	"errors"
+	"strings"
+)
 
-func matchContents(body []byte, criteria MatchCriteria) (bool, string) {
+func matchContents(body []byte, criteria MatchCriteria) (bool, error) {
 	if criteria.BodyContains != "" && !strings.Contains(string(body), criteria.BodyContains) {
-		return false, "body content mismatch"
+		return false, errors.New("body content mismatch")
 	}
-	return true, "body content matches"
+	return true, nil
 }

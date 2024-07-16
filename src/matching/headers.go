@@ -7,13 +7,13 @@ import (
 	"strings"
 )
 
-func matchHeaders(resp *http.Response, criteria MatchCriteria) (bool, string) {
+func matchHeaders(resp *http.Response, criteria MatchCriteria) (bool, error) {
 	for key, value := range criteria.Headers {
 		if resp.Header.Get(key) != value {
-			return false, fmt.Sprintf("header mismatch: %s=%s\nheaders: %s", key, value, resp.Header)
+			return false, fmt.Errorf("header mismatch: %s=%s\nheaders: %s", key, value, resp.Header)
 		}
 	}
-	return true, "headers match"
+	return true, nil
 }
 
 func parseHeaders(headersList string) map[string]string {

@@ -1,7 +1,7 @@
 package matcher
 
 import (
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 )
@@ -13,31 +13,25 @@ type MatchCriteria struct {
 }
 
 func matchResponse(url string, criteria MatchCriteria) (bool, string) {
-	status := true
-	matchError := ""
-
 	resp, err := http.Get(url)
 	if err != nil {
 		return false, err.Error()
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return false, err.Error()
 	}
 
-	status, matchError = matchStatusCode(resp, criteria.StatusCodes)
-	if !status {
-		return false, matchError
+	if matched, err := matchStatusCode(resp, criteria.StatusCodes); !matched {
+		return false, err.Error()
 	}
-	status, matchError = matchHeaders(resp, criteria)
-	if !status {
-		return false, matchError
+	if matched, err := matchHeaders(resp, criteria); !matched {
+		return false, err.Error()
 	}
-	status, matchError = matchContents(body, criteria)
-	if !status {
-		return false, matchError
+	if matched, err := matchContents(body, criteria); !matched {
+		return false, err.Error()
 	}
 
 	return true, "Matched successfully for " + url

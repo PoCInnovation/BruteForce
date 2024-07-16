@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func matchStatusCode(resp *http.Response, matchCodes []int) (bool, string) {
+func matchStatusCode(resp *http.Response, matchCodes []int) (bool, error) {
 	isAll := false
 
 	if matchCodes[0] == 0 {
@@ -17,10 +17,10 @@ func matchStatusCode(resp *http.Response, matchCodes []int) (bool, string) {
 	}
 	for _, code := range matchCodes {
 		if resp.StatusCode == code || isAll {
-			return true, fmt.Sprintf("status code is %d", resp.StatusCode)
+			return true, nil
 		}
 	}
-	return false, fmt.Sprintf("status code is %d", resp.StatusCode)
+	return false, fmt.Errorf("status code is %d", resp.StatusCode)
 }
 
 func parseStatusCodes(statusCodeList string) ([]int, error) {
@@ -39,7 +39,7 @@ func parseStatusCodes(statusCodeList string) ([]int, error) {
 		if code < 600 && code >= 100 {
 			codes = append(codes, code)
 		} else {
-			fmt.Printf("[WARN] `%d` not considered, invalid status code.", code)
+			log.Printf("[WARN] `%d` not considered, invalid status code.", code)
 		}
 	}
 
