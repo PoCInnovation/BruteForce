@@ -7,14 +7,8 @@ import (
     "log"
 )
 
-
-func matchStatusCode(url string, matchCodes []int) (bool, string) {
+func matchStatusCode(resp *http.Response, matchCodes []int) (bool, string) {
     isAll := false
-    resp, err := http.Get(url)
-    if err != nil {
-        return false, err.Error()
-    }
-    defer resp.Body.Close()
 
     if matchCodes[0] == 0 {
         isAll = !isAll;
@@ -31,7 +25,6 @@ func matchStatusCode(url string, matchCodes []int) (bool, string) {
 
 func parseStatusCodes(statusCodeList string) ([]int, error) {
     codeStrs := strings.Split(statusCodeList, ",")
-
     if statusCodeList == "all" {
         log.Println("Matching all status codes")
         return []int{0}, nil

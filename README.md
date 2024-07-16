@@ -50,6 +50,14 @@ For example, `./bruteforce -status-codes="200,201,202,401,404"`.
 
 *By default* : 200, 401, 403, 404, 429, 500
 
+`-header` : match based on a header.
+
+For example, `./bruteforce -header="Content-Type: application/json"`.
+
+`-body` : match based on a body.
+
+For example, `./bruteforce -body="Hello World"`.
+
 ## Get involved
 
 You're invited to join this project ! Check out the [contributing guide](./CONTRIBUTING.md).

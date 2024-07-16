@@ -9,6 +9,8 @@ import (
 func main() {
 	usagePtr := flag.Bool("help", false, "a bool")
 	statusPtr := flag.String("status-codes", "200,401,403,404,429,500", "Comma-separated list of status codes to match")
+	headerPtr := flag.String("header", "", "Header to match")
+	bodyPtr := flag.String("body", "", "String to match in response body")
 
 	flag.Parse()
 	if *usagePtr {
@@ -18,5 +20,5 @@ func main() {
 		fmt.Println("\t\t\t[By default: 200,401,403,404,429,500]")
 		return;
 	}
-	matcher.MatchParser("http://example.com", *statusPtr)
+	matcher.MatchParser("http://example.com", *statusPtr, *headerPtr, *bodyPtr)
 }
