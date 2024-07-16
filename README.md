@@ -1,24 +1,42 @@
-# Brut Forcer Next-Gen
+# BrutForce Next-Gen
 
-Brut Forcer next generation written in go
+BrutForcer written in go.
 
 ## How does it work?
 
-[Explain how this project is working]
+Using advanced wordlists to gather information on web servers and perform brute force attacks.
 
 ## Getting Started
 
 ### Installation
 
-[Explain how to install all of the project's dependencies]
+[Golang install guide](https://go.dev/doc/install)
+
+Clone the repository and simply execute:
+
+```shell
+make
+```
+
+or
+
+```shell
+go build
+```
+
+to build the executable `bruteforce`.
 
 ### Quickstart
 
-Like every programme in Go : ```go run```
+To run the program directly, execute:
+
+```shell
+go run src/main.go
+```
 
 ### Usage
 
-[Explain how to use this project]
+No usage so far
 
 ## Get involved
 
