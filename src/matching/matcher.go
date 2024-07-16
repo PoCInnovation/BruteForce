@@ -12,7 +12,7 @@ type MatchCriteria struct {
 	BodyContains string
 }
 
-func matchResponse(url string, criteria MatchCriteria) (bool, string) {
+func MatchResponse(url string, criteria MatchCriteria) (bool, string) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return false, err.Error()
@@ -37,7 +37,7 @@ func matchResponse(url string, criteria MatchCriteria) (bool, string) {
 	return true, "Matched successfully for " + url
 }
 
-func MatchParser(url string, statuses string, headers string, bodyContains string) {
+func MatchParser(statuses string, headers string, bodyContains string) (MatchCriteria) {
 	matchCodes, err := parseStatusCodes(statuses)
 	if err != nil {
 		log.Fatal("Error parsing status codes:", err)
@@ -50,10 +50,5 @@ func MatchParser(url string, statuses string, headers string, bodyContains strin
 		BodyContains: bodyContains,
 	}
 
-	matched, msg := matchResponse(url, criteria)
-	if matched {
-		log.Println("Matched:", msg)
-	} else {
-		log.Println("Not matched:", msg)
-	}
+	return criteria;
 }

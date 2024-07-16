@@ -4,6 +4,7 @@ import (
 	"bruteforce/src/matching"
 	"flag"
 	"fmt"
+	"log"
 )
 
 func main() {
@@ -22,5 +23,10 @@ func main() {
 		fmt.Println("use flag -body=\"<string-in-body>\"")
 		return
 	}
-	matcher.MatchParser("http://example.com", *statusPtr, *headerPtr, *bodyPtr)
+
+	criteria := matcher.MatchParser(*statusPtr, *headerPtr, *bodyPtr)
+	result, err := matcher.MatchResponse("http://example.com", criteria)
+	if !result {
+		log.Fatal(err)
+	}
 }
