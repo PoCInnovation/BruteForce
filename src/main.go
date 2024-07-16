@@ -4,7 +4,6 @@ import (
 	"bruteforce/src/matching"
 	"flag"
 	"fmt"
-	"log"
 )
 
 func main() {
@@ -25,8 +24,7 @@ func main() {
 	}
 
 	criteria := matcher.MatchParser(*statusPtr, *headerPtr, *bodyPtr)
-	result, err := matcher.MatchResponse("http://example.com", criteria)
-	if !result {
-		log.Fatal(err)
-	}
+	// Here look to implement queryExecute
+	// matcher.MatchResponse can be called with criteria (above) in parameter
+	fmt.Println(criteria)
 }
