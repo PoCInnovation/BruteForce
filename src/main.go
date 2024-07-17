@@ -2,6 +2,7 @@ package main
 
 import (
 	"bruteforce/src/matching"
+	"bruteforce/src/query"
 	"flag"
 	"fmt"
 )
@@ -24,7 +25,13 @@ func main() {
 	}
 
 	criteria := matcher.MatchParser(*statusPtr, *headerPtr, *bodyPtr)
-	// Here look to implement queryExecute
-	// matcher.MatchResponse can be called with criteria (above) in parameter
 	fmt.Println(criteria)
+
+	data := query.ForceData{
+		Worker:   3,
+		WordList: "../wordList/rootList",
+		Url:      "http://localhost:3333",
+	}
+	// matcher.MatchResponse can be called with criteria (above) in parameter
+	query.MainRequest(data, criteria) // maybe like this?
 }
