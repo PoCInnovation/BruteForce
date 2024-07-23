@@ -1,0 +1,24 @@
+#!/bin/bash
+
+_bruteforce_completion() {
+    local cur prev opts
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="--threads -v"
+
+    if [[ ${COMP_CWORD} -eq 1 ]]; then
+        COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+    elif [[ ${COMP_CWORD} -eq 2 ]]; then
+        if [[ "${prev}" == "--threads" ]]; then
+            COMPREPLY=( $(compgen -W "1 2 4 8 16 32" -- "${cur}") )
+        elif [[ "${prev}" == "-v" ]]; then
+            COMPREPLY=()
+        elif [[ "${prev}" == "http://"* || "${prev}" == "https://"* ]]; then
+            COMPREPLY=()
+        fi
+    else
+        COMPREPLY=( $(compgen -W "http:// https://" -- "${cur}") )
+    fi
+}
+
+complete -F _bruteforce_completion bruteforce

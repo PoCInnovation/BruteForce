@@ -1,0 +1,19 @@
+#compdef bruteforce
+
+_bruteforce() {
+    local -a args
+
+    args=(
+        '-v[verbose mode]'
+        '--threads=[number of threads]:number of threads:_sequence 1 1 64'
+        ':url:_bruteforce_urls'
+    )
+
+    _arguments -s $args
+}
+
+_bruteforce_urls() {
+    _urls -p 'http://' 'https://'
+}
+
+compdef _bruteforce bruteforce
