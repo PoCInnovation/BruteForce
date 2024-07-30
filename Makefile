@@ -1,5 +1,6 @@
 
 NAME	=	bruteforce
+
 SRC		=	src/main.go
 
 all: $(NAME)
@@ -15,4 +16,8 @@ fclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re
+install_program:
+	echo "source $(pwd)/autocompletion/bash/_bruteforce" >> ~/.bashrc
+	echo "source $(pwd)/autocompletion/zsh/_bruteforce" >> ~/.zshrc
+
+.PHONY: all clean fclean re install_program

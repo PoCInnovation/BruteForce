@@ -1,15 +1,16 @@
 package query
 
 import (
+	"bruteforce/src/models"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 )
 
-func QueryExecute(data ForceData, path string, method string) {
+func QueryExecute(params *models.Forcing_params, path string, method string) {
 	client := &http.Client{}
-	req, err := http.NewRequest(method, data.Url+path, nil)
+	req, err := http.NewRequest(method, params.Url+path, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

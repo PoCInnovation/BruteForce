@@ -2,28 +2,23 @@ package query
 
 import (
 	"bruteforce/src/matching"
+	"bruteforce/src/models"
 	"bruteforce/src/utils"
 	"time"
 )
 
-type ForceData struct {
-	Worker   int
-	WordList string
-	Url      string
-}
-
-func executeQueryFromFile(data ForceData, currentPath chan string) {
+func executeQueryFromFile(params *models.Forcing_params, currentPath chan string) {
 	for taskData := range currentPath {
-		QueryExecute(data, taskData, "POST")
+		QueryExecute(params, taskData, "POST")
 	}
 }
 
-func MainRequest(data ForceData, criteria matcher.MatchCriteria) {
+func MainRequest(params *models.Forcing_params, criteria matcher.MatchCriteria) {
 	channel := make(chan string)
-	wordArray := utils.GetFileContent(data.WordList)
+	wordArray := utils.GetFileContent(params.Wordlist)
 
-	for i := 0; i < data.Worker; i++ {
-		go executeQueryFromFile(data, channel)
+	for i := 0; i < params.Workers; i++ {
+		go executeQueryFromFile(params, channel)
 	}
 	for i := 0; i < len(wordArray); i++ {
 		channel <- wordArray[i]
