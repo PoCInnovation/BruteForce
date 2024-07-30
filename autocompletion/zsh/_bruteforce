@@ -5,8 +5,12 @@ _bruteforce() {
 
     args=(
         '-v[verbose mode]'
-        '--threads=[number of threads]:number of threads:_sequence 1 1 64'
-        ':url:_bruteforce_urls'
+        '--threads=[number of threads]:number of threads:(1 2 4 8 16 32)'
+        '--status-codes=[Comma-separated list of status codes to match]:status codes:'
+        '--header=[Header to match]:header:'
+        '--body=[String to match in response body]:body:'
+        '--wordlist=[Wordlist to bruteforce URLs with]:wordlist:_files'
+        '*:url:_bruteforce_urls'
     )
 
     _arguments -s $args

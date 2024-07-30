@@ -4,18 +4,22 @@ _bruteforce_completion() {
     local cur prev opts
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="--threads -v"
+    opts="--threads -v --status-codes --header --body --wordlist"
 
     if [[ ${COMP_CWORD} -eq 1 ]]; then
         COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
     elif [[ ${COMP_CWORD} -eq 2 ]]; then
-        if [[ "${prev}" == "--threads" ]]; then
-            COMPREPLY=( $(compgen -W "1 2 4 8 16 32" -- "${cur}") )
-        elif [[ "${prev}" == "-v" ]]; then
-            COMPREPLY=()
-        elif [[ "${prev}" == "http://"* || "${prev}" == "https://"* ]]; then
-            COMPREPLY=()
-        fi
+        case "${prev}" in
+            --threads)
+                COMPREPLY=( $(compgen -W "1 2 4 8 16 32" -- "${cur}") )
+                ;;
+            --status-codes)
+                COMPREPLY=( $(compgen -W "200 401 403 404 429 500" -- "${cur}") )
+                ;;
+            --header|--body|--wordlist)
+                COMPREPLY=()
+                ;;
+        esac
     else
         COMPREPLY=( $(compgen -W "http:// https://" -- "${cur}") )
     fi
