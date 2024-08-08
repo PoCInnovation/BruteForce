@@ -13,6 +13,7 @@ func Parse_cli_args() (models.Forcing_params, error) {
 
 	UrlError := errors.New("No url given")
 	ThreadsError := errors.New("Wrong number of threads given")
+	WordListError := errors.New("No wordlist given")
 
 	forkptr := flag.Bool("v", false, "Verbose program")
 	statusPtr := flag.String("status-codes", "200,401,403,404,429,500", "Comma-separated list of status codes to match")
@@ -41,5 +42,8 @@ func Parse_cli_args() (models.Forcing_params, error) {
 	params.Header = *headerPtr
 	params.Body = *bodyPtr
 	params.Wordlist = *wordlistPtr
+	if params.Wordlist == "" {
+		return params, WordListError
+	}
 	return params, nil
 }

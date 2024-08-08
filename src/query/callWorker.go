@@ -7,7 +7,6 @@ import (
 	"sync"
 )
 
-
 func executeQueryFromFile(wg *sync.WaitGroup, params *models.Forcing_params, currentPath chan string) {
 	defer wg.Done()
 	for taskData := range currentPath {
@@ -17,7 +16,7 @@ func executeQueryFromFile(wg *sync.WaitGroup, params *models.Forcing_params, cur
 
 func MainRequest(params *models.Forcing_params, criteria matcher.MatchCriteria) {
 	wg := &sync.WaitGroup{}
-    wg.Add(data.Worker)
+	wg.Add(params.Workers)
 	channel := make(chan string)
 	wordArray := utils.GetFileContent(params.Wordlist)
 
