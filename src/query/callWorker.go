@@ -4,25 +4,29 @@ import (
 	"bruteforce/src/matching"
 	"bruteforce/src/models"
 	"bruteforce/src/utils"
-	"time"
+	"sync"
 )
 
-func executeQueryFromFile(params *models.Forcing_params, currentPath chan string) {
+
+func executeQueryFromFile(wg *sync.WaitGroup, params *models.Forcing_params, currentPath chan string) {
+	defer wg.Done()
 	for taskData := range currentPath {
 		QueryExecute(params, taskData, "POST")
 	}
 }
 
 func MainRequest(params *models.Forcing_params, criteria matcher.MatchCriteria) {
+	wg := &sync.WaitGroup{}
+    wg.Add(data.Worker)
 	channel := make(chan string)
 	wordArray := utils.GetFileContent(params.Wordlist)
 
 	for i := 0; i < params.Workers; i++ {
-		go executeQueryFromFile(params, channel)
+		go executeQueryFromFile(wg, params, channel)
 	}
 	for i := 0; i < len(wordArray); i++ {
 		channel <- wordArray[i]
 	}
-	time.Sleep(1 * time.Second)
+	wg.Wait()
 	close(channel)
 }
