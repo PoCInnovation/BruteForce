@@ -1,6 +1,7 @@
 package matcher
 
 import (
+	"bruteforce/src/models"
 	"io"
 	"log"
 	"net/http"
@@ -31,17 +32,17 @@ func MatchResponse(response *http.Response, criteria MatchCriteria) (bool, strin
 	return true, "matched successfully"
 }
 
-func MatchParser(statuses string, headers string, bodyContains string) MatchCriteria {
-	matchCodes, err := parseStatusCodes(statuses)
+func MatchParser(params *models.Forcing_params) MatchCriteria {
+	matchCodes, err := parseStatusCodes(params.Status)
 	if err != nil {
 		log.Fatal("Error parsing status codes:", err)
 	}
 
-	matchHeaders := parseHeaders(headers)
+	matchHeaders := parseHeaders(params.Header)
 	criteria := MatchCriteria{
 		StatusCodes:  matchCodes,
 		Headers:      matchHeaders,
-		BodyContains: bodyContains,
+		BodyContains: params.Body,
 	}
 
 	return criteria

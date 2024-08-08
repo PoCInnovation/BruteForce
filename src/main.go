@@ -1,37 +1,22 @@
 package main
 
 import (
+	"bruteforce/src/cli"
 	"bruteforce/src/matching"
 	"bruteforce/src/query"
-	"flag"
 	"fmt"
 )
 
 func main() {
-	usagePtr := flag.Bool("help", false, "a bool")
-	statusPtr := flag.String("status-codes", "200,401,403,404,429,500", "Comma-separated list of status codes to match")
-	headerPtr := flag.String("header", "", "Header to match")
-	bodyPtr := flag.String("body", "", "String to match in response body")
 
-	flag.Parse()
-	if *usagePtr {
-		fmt.Println("Usage for matching options:\n\nuse flag -status-codes=\"<status-options>\"")
-		fmt.Println("\tstatus-options\t200,202,400,404 (Comma-separated list)")
-		fmt.Println("\t\t\tall")
-		fmt.Println("\t\t\t[By default: 200,401,403,404,429,500]")
-		fmt.Println("\nuse flag -header=\"<key:value>\"")
-		fmt.Println("use flag -body=\"<string-in-body>\"")
-		return
+	forcing_params, err := cli.Parse_cli_args()
+
+	if err != nil {
+		panic(err)
 	}
+	fmt.Println(forcing_params)
 
-	criteria := matcher.MatchParser(*statusPtr, *headerPtr, *bodyPtr)
-	fmt.Println(criteria)
+	criteria := matcher.MatchParser(&forcing_params)
 
-	data := query.ForceData{
-		Worker:   3,
-		WordList: "../wordList/rootList",
-		Url:      "http://localhost:3333",
-	}
-	// matcher.MatchResponse can be called with criteria (above) in parameter
-	query.MainRequest(data, criteria) // maybe like this?
+	query.MainRequest(&forcing_params, criteria) // maybe like this?
 }

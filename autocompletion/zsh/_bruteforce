@@ -1,0 +1,23 @@
+#compdef bruteforce
+
+_bruteforce() {
+    local -a args
+
+    args=(
+        '-v[verbose mode]'
+        '--threads=[number of threads]:number of threads:(1 2 4 8 16 32)'
+        '--status-codes=[Comma-separated list of status codes to match]:status codes:'
+        '--header=[Header to match]:header:'
+        '--body=[String to match in response body]:body:'
+        '--wordlist=[Wordlist to bruteforce URLs with]:wordlist:_files'
+        '*:url:_bruteforce_urls'
+    )
+
+    _arguments -s $args
+}
+
+_bruteforce_urls() {
+    _urls -p 'http://' 'https://'
+}
+
+compdef _bruteforce bruteforce
