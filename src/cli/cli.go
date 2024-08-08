@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bruteforce/src/matching"
 	"bruteforce/src/models"
 	"errors"
 	"flag"
@@ -39,9 +40,7 @@ func Parse_cli_args() (models.Forcing_params, error) {
 	}
 	params.Url = flag.Args()[0]
 	// params.BoolFlags.Verbose = *forkptr
-	params.Status = *statusPtr
-	params.Header = *headerPtr
-	params.Body = *bodyPtr
+	params.Criteria = matcher.MatchParser(*statusPtr, *headerPtr, *bodyPtr)
 	params.Wordlist = *wordlistPtr
 	if params.Wordlist == "" {
 		return params, WordListError

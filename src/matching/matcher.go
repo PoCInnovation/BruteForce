@@ -7,13 +7,7 @@ import (
 	"net/http"
 )
 
-type MatchCriteria struct {
-	StatusCodes  []int
-	Headers      map[string]string
-	BodyContains string
-}
-
-func MatchResponse(response *http.Response, criteria MatchCriteria) (bool, string) {
+func MatchResponse(response *http.Response, criteria models.MatchCriteria) (bool, string) {
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return false, err.Error()
@@ -32,17 +26,17 @@ func MatchResponse(response *http.Response, criteria MatchCriteria) (bool, strin
 	return true, "matched successfully"
 }
 
-func MatchParser(params *models.Forcing_params) MatchCriteria {
-	matchCodes, err := parseStatusCodes(params.Status)
+func MatchParser(statusPtr string, headerPtr string, bodyPtr string) models.MatchCriteria {
+	matchCodes, err := parseStatusCodes(statusPtr)
 	if err != nil {
 		log.Fatal("Error parsing status codes:", err)
 	}
 
-	matchHeaders := parseHeaders(params.Header)
-	criteria := MatchCriteria{
+	matchHeaders := parseHeaders(headerPtr)
+	criteria := models.MatchCriteria{
 		StatusCodes:  matchCodes,
 		Headers:      matchHeaders,
-		BodyContains: params.Body,
+		BodyContains: bodyPtr,
 	}
 
 	return criteria

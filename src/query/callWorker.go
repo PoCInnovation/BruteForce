@@ -1,7 +1,6 @@
 package query
 
 import (
-	"bruteforce/src/matching"
 	"bruteforce/src/models"
 	"bruteforce/src/utils"
 	"sync"
@@ -14,7 +13,7 @@ func executeQueryFromFile(wg *sync.WaitGroup, params *models.Forcing_params, cur
 	}
 }
 
-func MainRequest(params *models.Forcing_params, criteria matcher.MatchCriteria) {
+func MainRequest(params *models.Forcing_params) {
 	wg := &sync.WaitGroup{}
 	wg.Add(params.Workers)
 	channel := make(chan string)
