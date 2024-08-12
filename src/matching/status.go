@@ -1,21 +1,22 @@
 package matcher
 
 import (
+	"bruteforce/src/models"
 	"fmt"
 	"log"
 	"net/http"
 	"strings"
 )
 
-func matchStatusCode(resp *http.Response, matchCodes []int) (bool, error) {
+func matchStatusCode(resp *http.Response, criteria models.MatchCriteria) (bool, error) {
 	isAll := false
 
-	if matchCodes[0] == 0 {
+	if criteria.StatusCodes[0] == 0 {
 		isAll = !isAll
 	} else {
-		log.Printf("Matching status codes %d...", matchCodes)
+		log.Printf("Matching status codes %d...", criteria.StatusCodes)
 	}
-	for _, code := range matchCodes {
+	for _, code := range criteria.StatusCodes {
 		if resp.StatusCode == code || isAll {
 			return true, nil
 		}

@@ -2,28 +2,22 @@ package matcher
 
 import (
 	"bruteforce/src/models"
-	"io"
 	"log"
 	"net/http"
 )
 
-func MatchResponse(response *http.Response, criteria models.MatchCriteria) (bool, string) {
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return false, err.Error()
-	}
-
-	if matched, err := matchStatusCode(response, criteria.StatusCodes); !matched {
-		return false, err.Error()
+func MatchResponse(response *http.Response, body []byte, criteria models.MatchCriteria) error {
+	if matched, err := matchStatusCode(response, criteria); !matched {
+		return err
 	}
 	if matched, err := matchHeaders(response, criteria); !matched {
-		return false, err.Error()
+		return err
 	}
 	if matched, err := matchContents(body, criteria); !matched {
-		return false, err.Error()
+		return err
 	}
 
-	return true, "matched successfully"
+	return nil
 }
 
 func MatchParser(statusPtr string, headerPtr string, bodyPtr string) models.MatchCriteria {

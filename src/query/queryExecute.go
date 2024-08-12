@@ -1,6 +1,7 @@
 package query
 
 import (
+	"bruteforce/src/matching"
 	"bruteforce/src/models"
 	"fmt"
 	"io"
@@ -29,5 +30,8 @@ func QueryExecute(params *models.Forcing_params, path string, method string) {
 		log.Fatal(err)
 	}
 
-	fmt.Println(string(body))
+	if err := matcher.MatchResponse(resp, body, params.Criteria); err == nil {
+		fmt.Println(string(body))
+	}
+
 }
