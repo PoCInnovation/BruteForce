@@ -32,6 +32,8 @@ func QueryExecute(params *models.Forcing_params, path string, method string) {
 
 	if err := matcher.MatchResponse(resp, body, params.Criteria); err == nil {
 		fmt.Println(string(body))
+	} else {
+		log.Println(err)
 	}
 
 }

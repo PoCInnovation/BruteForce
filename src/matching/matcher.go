@@ -7,13 +7,13 @@ import (
 )
 
 func MatchResponse(response *http.Response, body []byte, criteria models.MatchCriteria) error {
-	if matched, err := matchStatusCode(response, criteria); !matched {
+	if err := matchStatusCode(response, criteria); err != nil {
 		return err
 	}
-	if matched, err := matchHeaders(response, criteria); !matched {
+	if err := matchHeaders(response, criteria); err != nil {
 		return err
 	}
-	if matched, err := matchContents(body, criteria); !matched {
+	if err := matchContents(body, criteria); err != nil {
 		return err
 	}
 

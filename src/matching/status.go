@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func matchStatusCode(resp *http.Response, criteria models.MatchCriteria) (bool, error) {
+func matchStatusCode(resp *http.Response, criteria models.MatchCriteria) error {
 	isAll := false
 
 	if criteria.StatusCodes[0] == 0 {
@@ -18,10 +18,10 @@ func matchStatusCode(resp *http.Response, criteria models.MatchCriteria) (bool, 
 	}
 	for _, code := range criteria.StatusCodes {
 		if resp.StatusCode == code || isAll {
-			return true, nil
+			return nil
 		}
 	}
-	return false, fmt.Errorf("status code is %d", resp.StatusCode)
+	return fmt.Errorf("status code is %d", resp.StatusCode)
 }
 
 func parseStatusCodes(statusCodeList string) ([]int, error) {

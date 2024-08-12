@@ -8,13 +8,13 @@ import (
 	"strings"
 )
 
-func matchHeaders(resp *http.Response, criteria models.MatchCriteria) (bool, error) {
+func matchHeaders(resp *http.Response, criteria models.MatchCriteria) error {
 	for key, value := range criteria.Headers {
 		if resp.Header.Get(key) != value {
-			return false, fmt.Errorf("header mismatch: %s=%s\nheaders: %s", key, value, resp.Header)
+			return fmt.Errorf("header mismatch: %s=%s\nheaders: %s", key, value, resp.Header)
 		}
 	}
-	return true, nil
+	return nil
 }
 
 func parseHeaders(headersList string) map[string]string {
