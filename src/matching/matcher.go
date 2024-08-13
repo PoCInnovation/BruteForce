@@ -2,47 +2,35 @@ package matcher
 
 import (
 	"bruteforce/src/models"
-	"io"
 	"log"
 	"net/http"
 )
 
-type MatchCriteria struct {
-	StatusCodes  []int
-	Headers      map[string]string
-	BodyContains string
+func MatchResponse(response *http.Response, body []byte, criteria models.MatchCriteria) error {
+	if err := matchStatusCode(response, criteria); err != nil {
+		return err
+	}
+	if err := matchHeaders(response, criteria); err != nil {
+		return err
+	}
+	if err := matchContents(body, criteria); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func MatchResponse(response *http.Response, criteria MatchCriteria) (bool, string) {
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return false, err.Error()
-	}
-
-	if matched, err := matchStatusCode(response, criteria.StatusCodes); !matched {
-		return false, err.Error()
-	}
-	if matched, err := matchHeaders(response, criteria); !matched {
-		return false, err.Error()
-	}
-	if matched, err := matchContents(body, criteria); !matched {
-		return false, err.Error()
-	}
-
-	return true, "matched successfully"
-}
-
-func MatchParser(params *models.Forcing_params) MatchCriteria {
-	matchCodes, err := parseStatusCodes(params.Status)
+func MatchParser(statusPtr string, headerPtr string, bodyPtr string) models.MatchCriteria {
+	matchCodes, err := parseStatusCodes(statusPtr)
 	if err != nil {
 		log.Fatal("Error parsing status codes:", err)
 	}
 
-	matchHeaders := parseHeaders(params.Header)
-	criteria := MatchCriteria{
+	matchHeaders := parseHeaders(headerPtr)
+	criteria := models.MatchCriteria{
 		StatusCodes:  matchCodes,
 		Headers:      matchHeaders,
-		BodyContains: params.Body,
+		BodyContains: bodyPtr,
 	}
 
 	return criteria

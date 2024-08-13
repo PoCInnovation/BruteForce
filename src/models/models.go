@@ -4,12 +4,16 @@ type boolflags struct {
 	Verbose bool
 }
 
+type MatchCriteria struct {
+	StatusCodes  []int
+	Headers      map[string]string
+	BodyContains string
+}
+
 type Forcing_params struct {
 	Workers   int
 	Url       string
 	Wordlist  string
 	BoolFlags boolflags
-	Status    string
-	Header    string
-	Body      string
+	Criteria  MatchCriteria
 }

@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bruteforce/src/matching"
 	"bruteforce/src/models"
 	"errors"
 	"flag"
@@ -17,7 +18,7 @@ func Parse_cli_args() (models.Forcing_params, error) {
 
 	// forkptr := flag.Bool("v", false, "Verbose program")
 	statusPtr := flag.String("status-codes", "200,401,403,404,429,500", "Comma-separated list of status codes to match")
-	headerPtr := flag.String("header", "", "Header to match")
+	headerPtr := flag.String("header", "", "Header to match, formatted as \"key: value\"")
 	bodyPtr := flag.String("body", "", "String to match in response body")
 	wordlistPtr := flag.String("wordlist", "", "Wordlist to bruteforce url with")
 	flag.IntVar(&params.Workers, "threads", 1, "Number of threads to be used")
@@ -37,14 +38,14 @@ func Parse_cli_args() (models.Forcing_params, error) {
 	if len(flag.Args()) < 1 {
 		return params, UrlError
 	}
+
 	params.Url = flag.Args()[0]
 	// params.BoolFlags.Verbose = *forkptr
-	params.Status = *statusPtr
-	params.Header = *headerPtr
-	params.Body = *bodyPtr
+	params.Criteria = matcher.MatchParser(*statusPtr, *headerPtr, *bodyPtr)
 	params.Wordlist = *wordlistPtr
 	if params.Wordlist == "" {
 		return params, WordListError
 	}
+
 	return params, nil
 }

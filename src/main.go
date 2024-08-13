@@ -2,7 +2,6 @@ package main
 
 import (
 	"bruteforce/src/cli"
-	"bruteforce/src/matching"
 	"bruteforce/src/query"
 	"fmt"
 )
@@ -16,7 +15,5 @@ func main() {
 	}
 	fmt.Println(forcing_params)
 
-	criteria := matcher.MatchParser(&forcing_params)
-
-	query.MainRequest(&forcing_params, criteria) // maybe like this?
+	query.MainRequest(&forcing_params)
 }
