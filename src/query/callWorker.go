@@ -9,7 +9,7 @@ import (
 func executeQueryFromFile(wg *sync.WaitGroup, params *models.Forcing_params, currentPath chan string) {
 	defer wg.Done()
 	for taskData := range currentPath {
-		QueryExecute(params, taskData, "POST")
+		QueryExecute(params, taskData, "GET")
 	}
 }
 
