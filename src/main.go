@@ -8,12 +8,12 @@ import (
 
 func main() {
 
-	forcing_params, err := cli.Parse_cli_args()
+	forcingParams, err := cli.ParseCliArgs()
 
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(forcing_params)
+	fmt.Println(forcingParams)
 
-	query.MainRequest(&forcing_params)
+	query.MainRequest(&forcingParams)
 }

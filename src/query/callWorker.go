@@ -6,14 +6,14 @@ import (
 	"sync"
 )
 
-func executeQueryFromFile(wg *sync.WaitGroup, params *models.Forcing_params, currentPath chan string) {
+func executeQueryFromFile(wg *sync.WaitGroup, params *models.ForcingParams, currentPath chan string) {
 	defer wg.Done()
 	for taskData := range currentPath {
 		QueryExecute(params, taskData, "GET")
 	}
 }
 
-func MainRequest(params *models.Forcing_params) {
+func MainRequest(params *models.ForcingParams) {
 	wg := &sync.WaitGroup{}
 	wg.Add(params.Workers)
 	channel := make(chan string)

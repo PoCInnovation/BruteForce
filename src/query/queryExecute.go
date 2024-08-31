@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func QueryExecute(params *models.Forcing_params, path string, method string) {
+func QueryExecute(params *models.ForcingParams, path string, method string) {
 	client := &http.Client{}
 	req, err := http.NewRequest(method, params.Url+path, nil)
 	if err != nil {

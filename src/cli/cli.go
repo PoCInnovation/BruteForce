@@ -9,12 +9,12 @@ import (
 	"os"
 )
 
-func Parse_cli_args() (models.Forcing_params, error) {
-	var params models.Forcing_params
+func ParseCliArgs() (models.ForcingParams, error) {
+	var params models.ForcingParams
 
-	UrlError := errors.New("No url given")
-	ThreadsError := errors.New("Wrong number of threads given")
-	WordListError := errors.New("No wordlist given")
+	UrlError := errors.New("no url given")
+	ThreadsError := errors.New("wrong number of threads given")
+	WordListError := errors.New("no wordlist given")
 
 	forkptr := flag.Bool("v", false, "Verbose program")
 	statusPtr := flag.String("status-codes", "200,401,403,404,429,500", "Comma-separated list of status codes to match")

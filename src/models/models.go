@@ -10,7 +10,7 @@ type MatchCriteria struct {
 	BodyContains string
 }
 
-type Forcing_params struct {
+type ForcingParams struct {
 	Workers   int
 	Url       string
 	Wordlist  string
