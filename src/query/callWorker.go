@@ -22,9 +22,11 @@ func MainRequest(params *models.Forcing_params) {
 	for i := 0; i < params.Workers; i++ {
 		go executeQueryFromFile(wg, params, channel)
 	}
+
 	for i := 0; i < len(wordArray); i++ {
 		channel <- wordArray[i]
 	}
-	wg.Wait()
+
 	close(channel)
+	wg.Wait()
 }

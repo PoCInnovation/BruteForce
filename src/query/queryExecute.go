@@ -15,13 +15,14 @@ func QueryExecute(params *models.Forcing_params, path string, method string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Printf("NewRequest(%s)", params.Url+path)
 
 	q := req.URL.Query()
 	req.URL.RawQuery = q.Encode()
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
 
@@ -35,5 +36,4 @@ func QueryExecute(params *models.Forcing_params, path string, method string) {
 	} else {
 		log.Println(err)
 	}
-
 }
