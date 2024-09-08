@@ -9,7 +9,7 @@ import (
 )
 
 func matchHeaders(resp *http.Response, criteria models.MatchCriteria) error {
-	for key, value := range criteria.Headers {
+	for key, value := range criteria.Headers.Headers {
 		if resp.Header.Get(key) != value {
 			return fmt.Errorf("header mismatch: %s=%s\nheaders: %s", key, value, resp.Header)
 		}

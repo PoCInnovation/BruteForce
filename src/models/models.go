@@ -4,10 +4,20 @@ type boolflags struct {
 	Verbose bool
 }
 
+type HeaderMatch struct {
+	Headers      	map[string]string
+	MatchAllHeader 	bool
+}
+
+type BodyMatch struct {
+	BodyContains 	string
+	MatchAllBody 	bool
+}
+
 type MatchCriteria struct {
-	StatusCodes  []int
-	Headers      map[string]string
-	BodyContains string
+	StatusCodes  	[]int
+	Headers 		HeaderMatch
+	BodyContains 	BodyMatch
 }
 
 type ForcingParams struct {
