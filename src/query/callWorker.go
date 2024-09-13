@@ -24,9 +24,10 @@ func MainRequest(params *models.ForcingParams) {
 	}
 
 	for i := 0; i < len(wordArray); i++ {
-		channel <- wordArray[i]
+		if len(wordArray[i]) > 0 && wordArray[i][0] != '#' {
+			channel <- wordArray[i]
+		}
 	}
-
 	close(channel)
 	wg.Wait()
 }
