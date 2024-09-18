@@ -58,11 +58,11 @@ To match multiple headers, use commas to separate each querie. Specify `ALL` if 
 
 - should match all of the headers:
 
-`./bruteforce -header="ALL,Content-Type: application/json,Content-Type: text/css"`
+`./bruteforce -header="all,Content-Type: application/json,Content-Type: text/css"`
 
 - match on any of the headers:
 
-`./bruteforce -header="Content-Type: application/json,Content-Type: text/css"`
+`./bruteforce -header="one,Content-Type: application/json,Content-Type: text/css"`
 
 `-body` : match based on a body.
 
