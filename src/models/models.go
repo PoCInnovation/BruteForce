@@ -5,19 +5,19 @@ type boolflags struct {
 }
 
 type HeaderMatch struct {
-	Headers      	map[string]string
-	MatchAllHeader 	bool
+	Headers        map[string]string
+	MatchAllHeader bool
 }
 
 type BodyMatch struct {
-	BodyContains 	string
-	MatchAllBody 	bool
+	BodyContains []string
+	MatchAllBody bool
 }
 
 type MatchCriteria struct {
-	StatusCodes  	[]int
-	Headers 		HeaderMatch
-	BodyContains 	BodyMatch
+	StatusCodes []int
+	Header      HeaderMatch
+	Body        BodyMatch
 }
 
 type ForcingParams struct {

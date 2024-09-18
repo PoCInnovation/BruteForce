@@ -4,7 +4,6 @@ import (
 	"bruteforce/src/models"
 	"log"
 	"net/http"
-	"strings"
 )
 
 func MatchResponse(response *http.Response, body []byte, criteria models.MatchCriteria) error {
@@ -28,10 +27,12 @@ func MatchParser(statusPtr string, headerPtr string, bodyPtr string) models.Matc
 	}
 
 	matchHeaders := parseHeaders(headerPtr)
+	matchBody := parseBody(bodyPtr)
+
 	criteria := models.MatchCriteria{
-		StatusCodes:  matchCodes,
-		Headers:      models.HeaderMatch {Headers: matchHeaders, MatchAllHeader: false},
-		BodyContains: models.BodyMatch {BodyContains: bodyPtr, MatchAllBody: false},
+		StatusCodes: matchCodes,
+		Header:      matchHeaders,
+		Body:        matchBody,
 	}
 
 	return criteria
