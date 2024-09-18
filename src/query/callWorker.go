@@ -8,8 +8,13 @@ import (
 
 func executeQueryFromFile(wg *sync.WaitGroup, params *models.ForcingParams, currentPath chan string) {
 	defer wg.Done()
+
+	if params.Url[len(params.Url)-1] != '/' {
+		params.Url = params.Url + "/"
+	}
+
 	for taskData := range currentPath {
-		QueryExecute(params, taskData, "GET")
+		QueryExecute(params, taskData, "POST")
 	}
 }
 

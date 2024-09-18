@@ -27,10 +27,12 @@ func MatchParser(statusPtr string, headerPtr string, bodyPtr string) models.Matc
 	}
 
 	matchHeaders := parseHeaders(headerPtr)
+	matchBody := parseBody(bodyPtr)
+
 	criteria := models.MatchCriteria{
-		StatusCodes:  matchCodes,
-		Headers:      matchHeaders,
-		BodyContains: bodyPtr,
+		StatusCodes: matchCodes,
+		Header:      matchHeaders,
+		Body:        matchBody,
 	}
 
 	return criteria

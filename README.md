@@ -54,9 +54,21 @@ For example, `./bruteforce -status-codes="200,201,202,401,404"`.
 
 For example, `./bruteforce -header="Content-Type: application/json"`.
 
+To match multiple headers, use commas to separate each querie. Specify `ALL` if you wish to have all matches be true, if not don't add the `ALL`. As so:
+
+- should match all of the headers:
+
+`./bruteforce -header="all,Content-Type: application/json,Content-Type: text/css"`
+
+- match on any of the headers:
+
+`./bruteforce -header="one,Content-Type: application/json,Content-Type: text/css"`
+
 `-body` : match based on a body.
 
 For example, `./bruteforce -body="Hello World"`.
+
+Same applies the body for multiple queries of strings in the body as the header.
 
 ## Get involved
 
