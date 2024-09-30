@@ -14,7 +14,7 @@ func executeQueryFromFile(wg *sync.WaitGroup, params *models.ForcingParams, curr
 	}
 
 	for taskData := range currentPath {
-		QueryExecute(params, taskData, "POST")
+		QueryExecute(params, taskData, params.Method)
 	}
 }
 

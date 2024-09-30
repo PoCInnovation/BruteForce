@@ -6,10 +6,12 @@ _bruteforce() {
     args=(
         '-v[verbose mode]'
         '--threads=[number of threads]:number of threads:(1 2 4 8 16 32)'
-        '--status-codes=[Comma-separated list of status codes to match]:status codes:'
+        '--status-codes=[Comma-separated list of status codes to match]:codes:(200 401 403 404 429 500)'
         '--header=[Header to match]:header:'
         '--body=[String to match in response body]:body:'
         '--wordlist=[Wordlist to bruteforce URLs with]:wordlist:_files'
+        '--method=[Method to bruteforce with]:methodes:(POST GET PUT PATCH DELETE HEAD OPTIONS)'
+        '--data=[JSON Data to inlude in body when bruteforcing]':data
         '*:url:_bruteforce_urls'
     )
 

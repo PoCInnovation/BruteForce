@@ -26,4 +26,6 @@ type ForcingParams struct {
 	Wordlist  string
 	BoolFlags boolflags
 	Criteria  MatchCriteria
+	Data      string
+	Method    string
 }

@@ -8,13 +8,15 @@ import (
 	"strings"
 )
 
-func matchStatusCode(resp *http.Response, criteria models.MatchCriteria) error {
+func matchStatusCode(resp *http.Response, criteria models.MatchCriteria, params *models.ForcingParams) error {
 	isAll := false
 
 	if criteria.StatusCodes[0] == 0 {
 		isAll = !isAll
 	} else {
-		log.Printf("Matching status codes %d...", criteria.StatusCodes)
+		if params.BoolFlags.Verbose {
+			log.Printf("Matching status codes %d...", criteria.StatusCodes)
+		}
 	}
 	for _, code := range criteria.StatusCodes {
 		if resp.StatusCode == code || isAll {
