@@ -1,7 +1,8 @@
 package models
 
 type boolflags struct {
-	Verbose bool
+	Verbose    bool
+	BodyToFile bool
 }
 
 type HeaderMatch struct {
@@ -26,4 +27,6 @@ type ForcingParams struct {
 	Wordlist  string
 	BoolFlags boolflags
 	Criteria  MatchCriteria
+	Data      string
+	Method    string
 }

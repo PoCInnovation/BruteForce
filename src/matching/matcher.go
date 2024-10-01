@@ -6,8 +6,8 @@ import (
 	"net/http"
 )
 
-func MatchResponse(response *http.Response, body []byte, criteria models.MatchCriteria) error {
-	if err := matchStatusCode(response, criteria); err != nil {
+func MatchResponse(response *http.Response, body []byte, criteria models.MatchCriteria, params *models.ForcingParams) error {
+	if err := matchStatusCode(response, criteria, params); err != nil {
 		return err
 	}
 	if err := matchHeaders(response, criteria); err != nil {
@@ -16,7 +16,6 @@ func MatchResponse(response *http.Response, body []byte, criteria models.MatchCr
 	if err := matchContents(body, criteria); err != nil {
 		return err
 	}
-
 	return nil
 }
 
