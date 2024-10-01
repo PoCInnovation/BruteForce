@@ -20,11 +20,11 @@ func ParseCliArgs() (models.ForcingParams, error) {
 	statusPtr := flag.String("status-codes", "200,401,403,404,429,500", "Comma-separated list of status codes to match")
 	headerPtr := flag.String("header", "", "Header to match, formatted as \"key: value\"")
 	bodyPtr := flag.String("body", "", "String to match in response body")
-	wordlistPtr := flag.String("wordlist", "", "Wordlist to bruteforce url with")
+	wordlistPtr := flag.String("wordlist", "default-wordlist.txt", "Wordlist to bruteforce url with")
 	flag.IntVar(&params.Workers, "threads", 1, "Number of threads to be used")
 
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: bruteforce [options] --wordlist=[./path/to/wordlist] <url>\n")
+		fmt.Fprintf(os.Stderr, "Usage: bruteforce [options] <url>\n")
 		fmt.Fprintf(os.Stderr, "Options:\n")
 		flag.PrintDefaults()
 	}
