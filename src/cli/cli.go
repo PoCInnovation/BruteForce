@@ -46,11 +46,10 @@ func ParseCliArgs() (models.ForcingParams, error) {
 	wordlistPtr := flag.String("wordlist", "", "Wordlist to bruteforce url with")
 	methodPtr := flag.String("method", "POST", "Method to bruteforce with")
 	postDataptr := flag.String("data", "", "JSON Data to inlude in body when bruteforcing")
-
 	flag.IntVar(&params.Workers, "threads", 1, "Number of threads to be used")
 
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: bruteforce [options] --wordlist=[./path/to/wordlist] <url>\n")
+		fmt.Fprintf(os.Stderr, "Usage: bruteforce [options] <url>\n")
 		fmt.Fprintf(os.Stderr, "Options:\n")
 		flag.PrintDefaults()
 	}
