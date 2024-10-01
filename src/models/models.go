@@ -1,7 +1,8 @@
 package models
 
 type boolflags struct {
-	Verbose bool
+	Verbose    bool
+	BodyToFile bool
 }
 
 type HeaderMatch struct {

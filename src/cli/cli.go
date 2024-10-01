@@ -39,6 +39,7 @@ func ParseCliArgs() (models.ForcingParams, error) {
 	UrlError := errors.New("no url given")
 
 	forkptr := flag.Bool("v", false, "Verbose program")
+	printbodyptr := flag.Bool("p", false, "Prints body when matched")
 	statusPtr := flag.String("status-codes", "200,401,403,404,429,500", "Comma-separated list of status codes to match")
 	headerPtr := flag.String("header", "", "Header to match, formatted as \"key: value\"")
 	bodyPtr := flag.String("body", "", "String to match in response body")
@@ -66,6 +67,7 @@ func ParseCliArgs() (models.ForcingParams, error) {
 	params.Criteria = matcher.MatchParser(*statusPtr, *headerPtr, *bodyPtr)
 	params.Data = *postDataptr
 	params.Method = *methodPtr
+	params.BoolFlags.BodyToFile = *printbodyptr
 
 	return errorHandling(params)
 }

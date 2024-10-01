@@ -37,7 +37,10 @@ func QueryExecute(params *models.ForcingParams, path string, method string) {
 	}
 
 	if err := matcher.MatchResponse(resp, body, params.Criteria, params); err == nil {
-		fmt.Println(string(body))
+		if params.BoolFlags.BodyToFile {
+			fmt.Println(string(body))
+		}
+		log.Printf("Successfully Matched %s", params.Url+path)
 	} else {
 		if params.BoolFlags.Verbose {
 			log.Println(err)
