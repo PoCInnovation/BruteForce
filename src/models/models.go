@@ -1,8 +1,15 @@
 package models
 
+type PromptBuilder struct {
+	SiteKeywords []string `json:"sitewords"`
+	TechKeywords []string `json:"techwords"`
+	WordlistLen  int      `json:"len"`
+}
+
 type boolflags struct {
 	Verbose    bool
 	BodyToFile bool
+	Generate   bool
 }
 
 type HeaderMatch struct {
@@ -22,11 +29,12 @@ type MatchCriteria struct {
 }
 
 type ForcingParams struct {
-	Workers   int
-	Url       string
-	Wordlist  string
-	BoolFlags boolflags
-	Criteria  MatchCriteria
-	Data      string
-	Method    string
+	Workers    int
+	Url        string
+	Wordlist   string
+	BoolFlags  boolflags
+	Criteria   MatchCriteria
+	Data       string
+	Method     string
+	PromptInfo PromptBuilder
 }

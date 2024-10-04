@@ -4,7 +4,7 @@ _bruteforce() {
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-    opts="-v --threads --status-codes --header --body --wordlist --method --data"
+    opts="-v --threads --status-codes --header --body --wordlist --method --data --generate"
 
     methods="POST GET PUT PATCH DELETE HEAD OPTIONS"
 
@@ -23,6 +23,11 @@ _bruteforce() {
             ;;
         --wordlist)
             COMPREPLY=( $(compgen -f -- "$cur") )
+            return 0
+            ;;
+        --generate)
+            local template='"{\"sitewords\": [\"?\", ...], \"techwords\": [\"?\", ...], \"len\": ?}"'
+            COMPREPLY=( "$template" )
             return 0
             ;;
         --header|--body|--data)

@@ -23,7 +23,7 @@ func errorHandling(params models.ForcingParams) (models.ForcingParams, error) {
 	if params.Workers < 1 {
 		return params, ThreadsError
 	}
-	if params.Wordlist == "" {
+	if params.Wordlist == "" && params.BoolFlags.Generate == false {
 		return params, WordListError
 	}
 	for i := 0; i < 7; i++ {
@@ -44,8 +44,9 @@ func ParseCliArgs() (models.ForcingParams, error) {
 	headerPtr := flag.String("header", "", "Header to match, formatted as \"key: value\"")
 	bodyPtr := flag.String("body", "", "String to match in response body")
 	wordlistPtr := flag.String("wordlist", "", "Wordlist to bruteforce url with")
-	methodPtr := flag.String("method", "POST", "Method to bruteforce with")
+	methodPtr := flag.String("method", "GET", "Method to bruteforce with")
 	postDataptr := flag.String("data", "", "JSON Data to inlude in body when bruteforcing")
+	genptr := flag.String("generate", "", "JSON to generate a custom wordlist using chat gpt based on your api key: {\"sitewords\": [\"?\", ...], \"techwords\": [\"?\", ...], \"len\": ?}")
 	flag.IntVar(&params.Workers, "threads", 1, "Number of threads to be used")
 
 	flag.Usage = func() {
@@ -67,6 +68,9 @@ func ParseCliArgs() (models.ForcingParams, error) {
 	params.Data = *postDataptr
 	params.Method = *methodPtr
 	params.BoolFlags.BodyToFile = *printbodyptr
+
+	err := json.Unmarshal([]byte(*genptr), &params.PromptInfo)
+	params.BoolFlags.Generate = !(err != nil)
 
 	return errorHandling(params)
 }
