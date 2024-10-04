@@ -104,12 +104,9 @@ func BuildPrompt(PromptInfo *models.PromptBuilder) (syspromt string, userpromt s
 
 const BRUTEFORCE_DIR string = "BruteforceWordlists"
 
-func OverwriteWordlist(params *models.ForcingParams) {
+func generateNewFile() (*os.File, string) {
 	re := regexp.MustCompile("[0-9]+")
 
-	if params.BoolFlags.Generate == false {
-		return
-	}
 	dirsinfo, err := os.ReadDir(BRUTEFORCE_DIR)
 	if err != nil {
 		err := os.Mkdir(BRUTEFORCE_DIR, os.ModePerm)
@@ -137,14 +134,38 @@ func OverwriteWordlist(params *models.ForcingParams) {
 	if err != nil {
 		panic(err)
 	}
+	return f, newfile
+}
+
+func OverwriteWordlist(params *models.ForcingParams) {
+	if params.BoolFlags.Generate == false {
+		return
+	}
+
+	if params.BoolFlags.Verbose {
+		log.Print("Generating wordlist ...")
+	}
+	f, newfile := generateNewFile()
+
 	params.Wordlist = newfile
 	userprompt, sysprompt := BuildPrompt(&params.PromptInfo)
+
+	if params.BoolFlags.Verbose {
+		log.Print("Contacting OpenAI API ...")
+	}
 	err, wordlist := CallopenAI(sysprompt, userprompt)
+
 	f.WriteString(wordlist)
 	f.Close()
+	if params.BoolFlags.Verbose {
+		log.Print("Clearing trailling spaces ...")
+	}
 	cmd := exec.Command("/bin/sh", "-c", "sed -i 's/[ \\t]*$//' "+newfile)
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("Error running command:", err)
+	}
+	if params.BoolFlags.Verbose {
+		log.Print("Done generating wordlist ...")
 	}
 }
