@@ -13,6 +13,8 @@ import (
 	"strconv"
 
 	"bruteforce/src/models"
+	"bruteforce/src/scrapping/scrappingSite"
+	"bruteforce/src/scrapping/scrappingTech"
 )
 
 type OpenAIResponse struct {
@@ -28,7 +30,7 @@ type Message struct {
 	Content string `json:"content"`
 }
 
-const WORDLIST_SYS_PROMPT string = "You are a wordlist generator knowledgeable about technology that generates a list and only a list of keywords and no - before the words, the words must follow the camel case and have no trailling spaces"
+const WORDLIST_SYS_PROMPT string = "You are a wordlist generator knowledgeable about technology that generates a list and only a list of keywords and ONLY keywords, no numbers, no - before the words, the words must follow the camel case and have no trailling spaces"
 
 func CallopenAI(SysPrompt string, UserPrompt string) (error, string) {
 	apiKey := os.Getenv("OPENAI_API_KEY")
@@ -140,6 +142,17 @@ func generateNewFile() (*os.File, string) {
 func OverwriteWordlist(params *models.ForcingParams) {
 	if params.BoolFlags.Generate == false {
 		return
+	}
+	if params.ScrapeLevel == "ALL" {
+		scarppingSite.ScrapSite(params, params.Url)
+		scarppingTech.ScrapScripts(params, params.Url)
+
+	}
+	if params.ScrapeLevel == "SITE" {
+		scarppingSite.ScrapSite(params, params.Url)
+	}
+	if params.ScrapeLevel == "TECH" {
+		scarppingSite.ScrapSite(params, params.Url)
 	}
 
 	if params.BoolFlags.Verbose {

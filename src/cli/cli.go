@@ -1,13 +1,14 @@
 package cli
 
 import (
-	"bruteforce/src/matching"
-	"bruteforce/src/models"
 	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
 	"os"
+
+	"bruteforce/src/matching"
+	"bruteforce/src/models"
 )
 
 func errorHandling(params models.ForcingParams) (models.ForcingParams, error) {
@@ -46,6 +47,7 @@ func ParseCliArgs() (models.ForcingParams, error) {
 	wordlistPtr := flag.String("wordlist", "", "Wordlist to bruteforce url with")
 	methodPtr := flag.String("method", "GET", "Method to bruteforce with")
 	postDataptr := flag.String("data", "", "JSON Data to inlude in body when bruteforcing")
+	scrapPtr := flag.String("scrape", "", "Scrape the original url for keywords to generate the wordlist: ALL/TECH/SITE")
 	genptr := flag.String("generate", "", "JSON to generate a custom wordlist using chat gpt based on your api key: {\"sitewords\": [\"?\", ...], \"techwords\": [\"?\", ...], \"len\": ?}")
 	flag.IntVar(&params.Workers, "threads", 1, "Number of threads to be used")
 
@@ -68,6 +70,7 @@ func ParseCliArgs() (models.ForcingParams, error) {
 	params.Data = *postDataptr
 	params.Method = *methodPtr
 	params.BoolFlags.BodyToFile = *printbodyptr
+	params.ScrapeLevel = *scrapPtr
 
 	err := json.Unmarshal([]byte(*genptr), &params.PromptInfo)
 	params.BoolFlags.Generate = !(err != nil)

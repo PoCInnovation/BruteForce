@@ -29,12 +29,13 @@ type MatchCriteria struct {
 }
 
 type ForcingParams struct {
-	Workers    int
-	Url        string
-	Wordlist   string
-	BoolFlags  boolflags
-	Criteria   MatchCriteria
-	Data       string
-	Method     string
-	PromptInfo PromptBuilder
+	Workers     int
+	Url         string
+	Wordlist    string
+	BoolFlags   boolflags
+	Criteria    MatchCriteria
+	Data        string
+	Method      string
+	PromptInfo  PromptBuilder
+	ScrapeLevel string
 }

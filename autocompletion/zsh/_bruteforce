@@ -13,6 +13,7 @@ _bruteforce() {
         '--method=[Method to bruteforce with (default "POST")]:method:(POST GET PUT PATCH DELETE HEAD OPTIONS)'
         '--data=[JSON Data to include in body when bruteforcing]:data:'
         '--generate=[Generate a custom wordlist using GPT based on your API key]:generate:_generate_template'
+        '--scrape=[Scrape the original url for keywords to generate the wordlist]:scrape_level:(ANY TECH SITE)'
         '-p[Prints body when matched]'
         '*:url:_bruteforce_urls'
     )
