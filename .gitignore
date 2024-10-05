@@ -1,2 +1,4 @@
 bruteforce
 default-wordlist.txt
+.env
+BruteforceWordlists

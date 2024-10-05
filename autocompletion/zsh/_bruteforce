@@ -4,18 +4,26 @@ _bruteforce() {
     local -a args
 
     args=(
-        '-v[verbose mode]'
-        '--threads=[number of threads]:number of threads:(1 2 4 8 16 32)'
-        '--status-codes=[Comma-separated list of status codes to match]:codes:(200 401 403 404 429 500)'
-        '--header=[Header to match]:header:'
+        '-v[Verbose mode]'
+        '--threads=[Number of threads to be used (default 1)]:number of threads:(1 2 4 8 16 32)'
+        '--status-codes=[Comma-separated list of status codes to match (default "200,401,403,404,429,500")]:codes:(200 401 403 404 429 500)'
+        '--header=[Header to match, formatted as "key: value"]:header:'
         '--body=[String to match in response body]:body:'
         '--wordlist=[Wordlist to bruteforce URLs with]:wordlist:_files'
-        '--method=[Method to bruteforce with]:methodes:(POST GET PUT PATCH DELETE HEAD OPTIONS)'
-        '--data=[JSON Data to inlude in body when bruteforcing]':data
+        '--method=[Method to bruteforce with (default "POST")]:method:(POST GET PUT PATCH DELETE HEAD OPTIONS)'
+        '--data=[JSON Data to include in body when bruteforcing]:data:'
+        '--generate=[Generate a custom wordlist using GPT based on your API key]:generate:_generate_template'
+        '--scrape=[Scrape the original url for keywords to generate the wordlist]:scrape_level:(ANY TECH SITE)'
+        '-p[Prints body when matched]'
         '*:url:_bruteforce_urls'
     )
 
     _arguments -s $args
+}
+
+_generate_template() {
+    local template='"{\"sitewords\": [\"?\", ...], \"techwords\": [\"?\", ...], \"len\": ?}"'
+    compadd -Q -- "$template"
 }
 
 _bruteforce_urls() {
